@@ -20,7 +20,8 @@ library
                        iconv < 0.5,
                        shelly < 1.8.0.0,
                        text < 1.4.0.0,
-                       template-haskell < 3.0.0.0
+                       template-haskell < 3.0.0.0,
+                       bytestring
   default-language:    Haskell2010
   ghc-options:         -Wall -Werror
   if os(darwin)
