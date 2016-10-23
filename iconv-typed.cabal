@@ -16,6 +16,7 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Codec.Text.IConv.Typed
+                       Codec.Text.IConv.Typed.TH
   build-depends:       base >= 4.7 && < 5,
                        iconv < 0.5,
                        shelly < 1.8.0.0,

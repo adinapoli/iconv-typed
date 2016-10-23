@@ -4,7 +4,11 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE KindSignatures #-}
 {-# OPTIONS_GHC -fno-warn-redundant-constraints #-}
-module Codec.Text.IConv.Typed where
+module Codec.Text.IConv.Typed
+  ( E(..)
+  , ValidEncoding
+  , convert
+  ) where
 
 import qualified Codec.Text.IConv as I
 import           Codec.Text.IConv.Typed.TH
