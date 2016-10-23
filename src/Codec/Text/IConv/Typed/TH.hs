@@ -1,4 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE CPP #-}
 module Codec.Text.IConv.Typed.TH where
 
@@ -9,13 +11,17 @@ import           Codec.Text.IConv.Typed.Unix
 #endif
 
 import           Codec.Text.IConv
-import           Control.Monad
 import           Data.List (foldl')
 import           Data.Maybe
 import qualified Data.Text as T
+import           GHC.TypeLits
 import           Language.Haskell.TH
 import           Text.Read
 
+data E (k :: Symbol) = E
+
+reifyEncoding :: KnownSymbol k => E k -> String
+reifyEncoding = symbolVal
 
 filterNumericEncoding :: [EncodingName] -> [EncodingName]
 filterNumericEncoding = filter (not . numerical)
@@ -37,11 +43,17 @@ applyRule t (input, output) = T.replace input output t
 convertName :: EncodingName -> EncodingName
 convertName = T.unpack . (\t -> foldl' applyRule t replacementRules) . T.pack
 
+-- closedTypeFamilyD :: Name -> [TyVarBndr] -> FamilyResultSig -> Maybe InjectivityAnn -> [TySynEqnQ] -> DecQ
+
+
 --------------------------------------------------------------------------------
 generateEncodings :: Q [Dec]
 generateEncodings = do
-  let encs = filterNumericEncoding getAvailableEncodings
-  mconcat <$> (forM encs $ \e -> do
-    let eName = mkName (convertName e)
-    let showI = mkName "Show"
-    return [DataD mempty eName mempty Nothing [NormalC eName mempty] [ConT showI]])
+  let encs   = getAvailableEncodings
+  let k      = mkName "k"
+  let symbol = mkName "Symbol"
+  let validEncoding = mkName "ValidEncoding"
+  let bool = mkName "Bool"
+  let instances = flip map encs $ \eName -> do
+        return $ TySynEqn [LitT (StrTyLit eName)] (PromotedT (mkName "True"))
+  (: []) <$> closedTypeFamilyD validEncoding [KindedTV k (ConT symbol)] (KindSig (ConT bool)) Nothing instances
