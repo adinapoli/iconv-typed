@@ -2,7 +2,7 @@
 
 ## iconv-typed
 
-An experiment in bringing type safety to the [iconv]() package.
+An experiment in bringing type safety to the [iconv](http://hackage.haskell.org/package/iconv) package.
 
 This is _almost_ a drop-in replacement. Compare the original code from `iconv`:
 
