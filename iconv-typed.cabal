@@ -34,14 +34,23 @@ description:
   > import Codec.Text.IConv.Typed
   >
   > main :: IO ()
-  > main = print $ convert (E :: E "UTF-8") (E :: E "LATIN1") "hello"
+  > main = print $ convert @"UTF-8" @"LATIN1" "hello"
   .
   As a result, this code will compile and run only if the passed encoding resolves to a supported
   encoding (as retrieved at compile time by calling "iconv -l"). For example, the following won't compile:
   .
-  > main = print $ convert (E :: E "UFT-8") (E :: E "LATIN1") "hello"
+  > main = print $ convert @"UFT-8" "LATIN1" "hello"
   .
   As `UFT` is mispelled.
+  .
+  Using GHC < 8.0 that doesn't supports `TypeInType`? No problem, we've got you covered!
+  .
+  > module Main where
+  >
+  > import Codec.Text.IConv.Typed
+  >
+  > main :: IO ()
+  > main = print $ convert (E :: E "UTF-8") (E :: E "LATIN1") "hello"
 
 library
   hs-source-dirs:      src
@@ -55,6 +64,10 @@ library
                        bytestring
   default-language:    Haskell2010
   ghc-options:         -Wall
+  if impl(ghc >= 8.0)
+    other-modules:     Codec.Text.IConv.Typed.TypeInTypeAPI
+  else
+    other-modules:     Codec.Text.IConv.Typed.VerboseAPI
   if os(darwin)
     other-modules:     Codec.Text.IConv.Typed.MacOSX
   else
