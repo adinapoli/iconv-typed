@@ -8,6 +8,7 @@
 {-# OPTIONS_GHC -fno-warn-redundant-constraints #-}
 module Codec.Text.IConv.Typed
   ( E(..)
+  , Enc(..)
   , ValidEncoding
   , convert
   , convert'
@@ -25,7 +26,6 @@ import qualified Codec.Text.IConv as I
 import           Codec.Text.IConv.Typed.TH
 import           Data.ByteString.Lazy
 import           Data.String
-import Data.Proxy
 import           GHC.TypeLits
 
 $(generateEncodings)
