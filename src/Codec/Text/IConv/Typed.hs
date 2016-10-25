@@ -24,7 +24,7 @@ module Codec.Text.IConv.Typed
 import qualified Codec.Text.IConv as I
 import           Codec.Text.IConv.Typed.TH
 
-#if __GLASGOW_HASKELL__ > 800
+#if __GLASGOW_HASKELL__ >= 800
 import           Codec.Text.IConv.Typed.TypeInTypeAPI
 #else
 import           Codec.Text.IConv.Typed.VerboseAPI
