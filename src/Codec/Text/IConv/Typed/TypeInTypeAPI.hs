@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeInType #-}
+{-# LANGUAGE AllowAmbiguousTypes #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TemplateHaskell #-}
@@ -29,20 +30,17 @@ import           GHC.TypeLits
 
 $(generateEncodings)
 
-newtype Enc k1 k2 = Enc ByteString
-
-instance IsString (Enc k1 k2) where
-  fromString x = Enc (fromString x)
+type Enc k1 k2 = ByteString
 
 --------------------------------------------------------------------------------
-convert :: ( KnownSymbol k1
+convert :: forall k1 k2. ( KnownSymbol k1
             , KnownSymbol k2
             , ValidEncoding k1 ~ 'True
             , ValidEncoding k2 ~ 'True
             )
          => Enc (k1 :: Symbol) (k2 :: Symbol) -- ^ Input text
          -> ByteString -- ^ Output text
-convert (Enc input :: Enc k1 k2) = I.convert (reifyEncoding (E @k1)) (reifyEncoding (E @k2)) input
+convert input = I.convert (reifyEncoding (E @k1)) (reifyEncoding (E @k2)) input
 
 --------------------------------------------------------------------------------
 convertFuzzy :: ( KnownSymbol k1
