@@ -9,7 +9,7 @@
 {-# OPTIONS_GHC -fno-warn-redundant-constraints #-}
 module Codec.Text.IConv.Typed.TypeInTypeAPI
   ( E(..)
-  , Enc(..)
+  , Enc
   , ValidEncoding
   , convert
   , convertFuzzy
@@ -25,7 +25,6 @@ module Codec.Text.IConv.Typed.TypeInTypeAPI
 import qualified Codec.Text.IConv as I
 import           Codec.Text.IConv.Typed.TH
 import           Data.ByteString.Lazy
-import           Data.String
 import           GHC.TypeLits
 
 $(generateEncodings)
