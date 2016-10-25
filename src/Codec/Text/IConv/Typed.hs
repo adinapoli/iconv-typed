@@ -4,7 +4,6 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE CPP #-}
-{-# OPTIONS_GHC -fno-warn-redundant-constraints #-}
 module Codec.Text.IConv.Typed
   ( E(..)
 #if __GLASGOW_HASKELL__ > 800

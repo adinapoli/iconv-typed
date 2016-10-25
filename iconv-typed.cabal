@@ -1,5 +1,5 @@
 name:                iconv-typed
-version:             0.1.0.1
+version:             0.2.0.0
 synopsis:            Type safe iconv wrapper
 homepage:            https://github.com/adinapoli/iconv-typed#readme
 license:             BSD3

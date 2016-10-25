@@ -2,7 +2,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE KindSignatures #-}
-{-# OPTIONS_GHC -fno-warn-redundant-constraints #-}
 module Codec.Text.IConv.Typed.VerboseAPI
   ( E(..)
   , ValidEncoding
