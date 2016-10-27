@@ -1,4 +1,3 @@
-{-# LANGUAGE TypeInType #-}
 {-# LANGUAGE AllowAmbiguousTypes #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -29,15 +28,15 @@ import           GHC.TypeLits
 
 $(generateEncodings)
 
-type Enc k1 k2 = ByteString
+type Enc (k1 :: Symbol) (k2 :: Symbol) = ByteString
 
 --------------------------------------------------------------------------------
-convert :: forall k1 k2. ( KnownSymbol k1
+convert :: forall (k1 :: Symbol) (k2 :: Symbol). ( KnownSymbol k1
             , KnownSymbol k2
             , ValidEncoding k1 ~ 'True
             , ValidEncoding k2 ~ 'True
             )
-         => Enc (k1 :: Symbol) (k2 :: Symbol) -- ^ Input text
+         => Enc k1 k2 -- ^ Input text
          -> ByteString -- ^ Output text
 convert input = I.convert (reifyEncoding (E @k1)) (reifyEncoding (E @k2)) input
 
